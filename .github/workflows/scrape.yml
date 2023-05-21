@@ -12,8 +12,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-        with:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+        
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -69,6 +68,9 @@ jobs:
               f.write(df.to_json(orient='records'))
           EOF
           
+          env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+          
       - name: Commit changes
         run: |
         
@@ -78,5 +80,8 @@ jobs:
           git config --global user.email 'mdhml@users.noreply.github.com'
           git commit -am "Automated report"
           git push
+          
+          env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
         
        
