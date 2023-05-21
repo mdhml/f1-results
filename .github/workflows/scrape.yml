@@ -72,11 +72,9 @@ jobs:
         run: |
           git config --local user.name github-actions
           git config --local user.email "action@github.com"
-          git add .
-          if [[ "$(git status --porcelain)" != "" ]]; then
-              git commit -m "Update data" -a
-              git push -u origin main
-          fi
+          git add f1_results.json
+          git commit -m "Update data" -a
+          git push
         env:
           REPO_KEY: ${{secrets.GITHUB_TOKEN}}
-          username: github-actions 
+          username: github-actions
