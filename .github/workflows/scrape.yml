@@ -70,10 +70,15 @@ jobs:
           
       - name: Commit changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Update data"
-          git push origin main
+        
+        
+      
+          git config --global user.name 'Madhu Mullur'
+          git config --global user.email 'mdhml@users.noreply.github.com'
+          git commit -am "Automated report"
+          git push
+        
+        
+          
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
