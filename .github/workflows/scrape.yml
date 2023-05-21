@@ -19,13 +19,27 @@ jobs:
           pip install requests pandas beautifulsoup4
       - name: Scrape Formula 1 Results
         run: |
-          import requests
-          from bs4 import BeautifulSoup
+          
           import pandas as pd
+          import datetime
 
-          url = 'https://www.formula1.com/en/results.html/2023/drivers.html'
-          page = requests.get(url)
-          soup = BeautifulSoup(page.content, 'html.parser')
-          table = soup.find_all('table')[0]
-          df = pd.read_html(str(table))[0]
-          print(df.to_json(orient='records'))
+          YEAR = datetime.datetime.now().year
+          df = pd.DataFrame(pd.read_html(f"https://www.formula1.com/en/results.html/{YEAR}/drivers.html")[0]        )
+          df = df[["Driver", "PTS", "Car"]]
+          # reverse the order
+          df = df.sort_values(by="PTS", ascending=True)
+
+          # in Driver column only keep the last 3 characters
+          df["Driver"] = df["Driver"].str[:-5]
+
+          # add colors to the dataframe
+          car_colors = utils.team_colors(YEAR)
+          df["fill"] = df["Car"].map(car_colors)
+
+          # remove rows where points is 0
+          df = df[df["PTS"] != 0]
+          df.reset_index(inplace=True, drop=True)
+          df.rename(columns={"PTS": "Points"}, inplace=True)      
+          
+          open('f1_results.json', 'w') as f:
+            json.dump(df.to_dict("records"), f)
