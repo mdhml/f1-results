@@ -67,3 +67,16 @@ jobs:
           with open('f1_results.json', 'w') as f:
               f.write(df.to_json(orient='records'))
           EOF
+          
+      - name: Commit changes
+        run: |
+          git config --local user.name github-actions
+          git config --local user.email "action@github.com"
+          git add .
+          if [[ "$(git status --porcelain)" != "" ]]; then
+              git commit -m "Update data" -a
+              git push -u origin main
+          fi
+        env:
+          REPO_KEY: ${{secrets.GITHUB_TOKEN}}
+          username: github-actions 
