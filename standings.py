@@ -1,5 +1,6 @@
 import pandas as pd
 import datetime
+import json
 
 
 YEAR = datetime.datetime.now().year
@@ -43,5 +44,7 @@ df = df[df["PTS"] != 0]
 df.reset_index(inplace=True, drop=True)
 df.rename(columns={"PTS": "Points"}, inplace=True)
 
+data = {"WDC": df.to_dict("records")}
+
 with open('f1_results.json', 'w') as f:
-    f.write({"WDC": df.to_dict("records")})
+    f.write(json.dumps(data))
