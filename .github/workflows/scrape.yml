@@ -1,8 +1,9 @@
 name: Scrape Formula 1 Results
 
 on:
-  schedule:
-    - cron: "0 0 * * *"
+  push:
+    branches:
+      - main
 
 jobs:
   scrape:
