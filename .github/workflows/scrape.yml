@@ -33,7 +33,34 @@ jobs:
           df["Driver"] = df["Driver"].str[:-5]
 
           # add colors to the dataframe
-          car_colors = utils.team_colors(YEAR)
+          car_colors =  {
+            "Red Bull Racing": "#ffe119",
+            "Ferrari": "#e6194b",
+            "Aston Martin": "#3cb44b",
+            "Mercedes": "#00c0bf",
+            "Alpine": "#f032e6",
+            "Haas F1 Team": "#ffffff",
+            "McLaren": "#f58231",
+            "Alfa Romeo": "#800000",
+            "AlphaTauri": "#dcbeff",
+            "Williams": "#4363d8",
+
+            "Red Bull Racing Honda RBPT": "#ffe119",
+            "Ferrari": "#e6194b",
+            "Aston Martin Aramco Mercedes": "#3cb44b",
+            "Mercedes": "#00c0bf",
+            "Alpine Renault": "#f032e6",
+            "Haas Ferrari": "#ffffff",
+            "McLaren Mercedes": "#f58231",
+            "Alfa Romeo Ferrari": "#800000",
+            "AlphaTauri Honda RBPT": "#dcbeff",
+            "Williams Mercedes": "#4363d8",
+            "Red Bull": "#ffe119",
+            "Alpine F1 Team": "#f032e6",
+
+
+
+        }
           df["fill"] = df["Car"].map(car_colors)
 
           # remove rows where points is 0
