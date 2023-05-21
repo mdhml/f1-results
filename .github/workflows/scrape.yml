@@ -34,7 +34,7 @@ jobs:
               git push -u origin main
           fi
         env:
-          REPO_KEY: ${{secrets.GITHUB_TOKEN}}
+          REPO_KEY: ${{secrets.PAT}}
           username: github-actions   
       
 
