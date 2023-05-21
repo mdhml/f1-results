@@ -64,5 +64,6 @@ jobs:
           df.reset_index(inplace=True, drop=True)
           df.rename(columns={"PTS": "Points"}, inplace=True)
           
-          df.to_json('f1_results.json', orient='records')
+          with open('f1_results.json', 'w') as f:
+              f.write(df.to_json(orient='records'))
           EOF
