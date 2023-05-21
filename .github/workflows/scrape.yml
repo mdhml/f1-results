@@ -1,0 +1,50 @@
+name: Scrape F1 Results
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install dependencies
+        run: pip install beautifulsoup4 requests
+
+      - name: Scrape and Convert to JSON
+        run: |
+          python - <<EOF
+          import requests
+          from bs4 import BeautifulSoup
+          import json
+
+          url = "https://www.formula1.com/en/results.html/2023/drivers.html"
+          response = requests.get(url)
+          soup = BeautifulSoup(response.text, "html.parser")
+
+          tables = soup.find_all("table")
+          first_table = tables[0]
+
+          table_data = []
+          for row in first_table.find_all("tr"):
+              data = [cell.get_text(strip=True) for cell in row.find_all(["th", "td"])]
+              table_data.append(data)
+
+          json_data = json.dumps(table_data)
+
+          with open("table.json", "w") as file:
+              file.write(json_data)
+          EOF
+
+      - name: Display JSON
+        run: cat table.json
