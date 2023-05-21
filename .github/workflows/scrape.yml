@@ -68,8 +68,7 @@ jobs:
               f.write(df.to_json(orient='records'))
           EOF
           
-          env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          
           
       - name: Commit changes
         run: |
