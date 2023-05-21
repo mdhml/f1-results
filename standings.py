@@ -44,4 +44,4 @@ df.reset_index(inplace=True, drop=True)
 df.rename(columns={"PTS": "Points"}, inplace=True)
 
 with open('f1_results.json', 'w') as f:
-    f.write(df.to_json(orient='records'))
+    f.write({"WDC": df.to_dict("records")})
